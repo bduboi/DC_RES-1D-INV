@@ -6,9 +6,9 @@ Dans le cas de la resistivité 1D, le modèle que nous utilisons est une solutio
 La procédure d'inversion utilise ce modèle pour calculer une liste de resistivité apparente et la comparer avec celle qu'on a vraiment mesuré. Elle se base sur une solution des moindres carrés et à chaque itération calcule une direction vers laquelle les **paramètres** (resistivité, épaisseur) doivent être modifiés pour se rapprocher le mieux que possible du jeu de donnée. 
 Il est aussi possible de prendre en compte les erreurs associées aux données en les multipliant par l'inverse de leur erreur associée, ce qui leur donne un poids : les points ayant les plus grosses erreurs seront moins impactants que les autres.
 ## Liste des fichiers et explication
-'''
+```
 dcfwdf.m           : fonction matlab calculant la réponse à un modèle de resistivité / épaisseurs 1D
 Sens_log.m         : fonction matlab utilisée à chaque itération pour calculer la **sensibilité** (ou Jacobienne) et trouver une direction de modification du modèle
 Inversion_DC1Dres.m: fonction contenant la boucle d'optimisation du modèle, faisant appel aux deux premières fonctions.
 Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de départ, rentre les données et lançons l'inversion.
-'''
+```
