@@ -55,7 +55,7 @@ Minimiser cette norme nous permet de rapprocher nos données modélisée de nos 
 ```math
 \lVert \alpha\hspace{2mm}\mathbf{I}\hspace{2mm}\mathbf{m} = \mathbf{0} \rVert 
 ```
-Nous introduisons un **paramètre de régularisation ** $\alpha$. Le but à présent est de minimiser la norme à la fois des données, et du modèle, c'est le principe de discordance. Notre fonction objectif peut se réécrire 
+Nous introduisons un **paramètre de régularisation** $\alpha$. Le but à présent est de minimiser la norme à la fois des données, et du modèle, c'est le principe de discordance. Notre fonction objectif peut se réécrire 
 ```math
 \phi =\phi_d + \alpha^2 \phi_m = \left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)^\intercal\\\left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right) + \alpha^2 \mathbf{m}^\intercal\\\mathbf{m}\hspace{1mm}\mathbf{I}
 ```
