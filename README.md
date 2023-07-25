@@ -14,6 +14,6 @@ Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de dépa
 ```
 ## Développement du problème inverse
 L'équation qui décrit l'opération directe est: 
-```
+```math
                     $\mathbf{f}(\mathbf{m})$ = $\mathbf{d}$
 ```
