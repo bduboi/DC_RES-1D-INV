@@ -24,8 +24,10 @@ L'équation qui décrit l'opération directe est:
 Le membre de gauche est l'opérateur direct, fonction du modèle. Il correpons à la fonction Matlab dcfwdf.m. Le membre de droite est bien entendu les données modélisées. 
 Tout le but du problème inverse est de minimiser la différence entre les données mesurées et les données modélisées:
 ```math
-```
+\begin{equation}
 \phi(\mathbf{m}) = \dfrac{1}{2}\lVert\mathbf{d} - \mathbf{f}(\mathbf{m})\rVert_2^2.
+\end{equation}
+```
 Avant de directement développer l'expression de cette norme, il faut **linéariser** notre opérateur $f$. Cela vient de la nature de notre problème: l'opérateur est non linéaire car, lorsqu'on modifie légèrement notre paramètre, disons, la conductivité à un certain endroit, cela influence les données de manière non-linéaire, à plusieurs endroits en même temps, par exemple. Cela se traduit mathématiquement par la matrice Jacobienne: 
 ```math
  \mathbf{f}(\mathbf{m}) = \mathbf{f}(\mathbf{m_0}) + \left.\dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}\right|_{m_0}\hspace{-3mm}\Delta\mathbf{m},
@@ -34,7 +36,8 @@ Où la Jacobienne est le second terme : la variation des données modélisée ($
 J = \dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}.
 ```
 Cette matrice, de dimension N$\times$M est appelée matrice de sensibilité, et représente, pour chaque paramètre (j = 1,...,m) l'impact sur chaque élémenent du jeu de donnée (i= 1,..., n). Par exemple, l'élement i=1, j=1 de la matrice de sensibilité donne l'influence de la resistivité de la première couche sur la resistivité apparente. 
-L'équation \ref{equation_directe} 
+### Régularisation
+\ref{equation_directe}
 ```math
 
 ```
