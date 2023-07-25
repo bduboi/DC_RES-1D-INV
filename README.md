@@ -5,6 +5,12 @@ Le principe du problème inverse est de simuler les données obtenues à partir 
 Dans le cas de la resistivité 1D, le modèle que nous utilisons est une solution analytique pour un modèle de Terre constituée de couches horizontales au dessus d'un **demi espace infini**. L'opérateur a été codé par Mathias Scheunert (TUBAF). Il prend en entrée M resistivités et M-1 épaisseurs (puisque la dernière couche est infinie), et la liste des N espacements d'électrodes. Avec ces trois informations, il donne en sortie une liste de N resistivités apparentes.
 La procédure d'inversion utilise ce modèle pour calculer une liste de resistivité apparente et la comparer avec celle qu'on a vraiment mesuré. Elle se base sur une solution des moindres carrés et à chaque itération calcule une direction vers laquelle les **paramètres** (resistivité, épaisseur) doivent être modifiés pour se rapprocher le mieux que possible du jeu de donnée. 
 Il est aussi possible de prendre en compte les erreurs associées aux données en les multipliant par l'inverse de leur erreur associée, ce qui leur donne un poids : les points ayant les plus grosses erreurs seront moins impactants que les autres.
+
+<p align="center" width="100%">
+    <img width="50%" src="Exemple_inversion.jpg">
+</p>
+Ci dessus, un exemple de fit de données de resitivité apparente
+
 ## Liste des fichiers et explication
 ```
 dcfwdf.m           : fonction matlab calculant la réponse à un modèle de resistivité / épaisseurs 1D
