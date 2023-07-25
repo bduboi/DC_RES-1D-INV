@@ -9,7 +9,7 @@ Il est aussi possible de prendre en compte les erreurs associées aux données e
 ```
 dcfwdf.m           : fonction matlab calculant la réponse à un modèle de resistivité / épaisseurs 1D
 Sens_log.m         : fonction matlab utilisée à chaque itération pour calculer la **sensibilité** (ou Jacobienne) et trouver une direction de modification du modèle
-Inversion_DC1Dres.m: fonction contenant la boucle d'optimisation du modèle, faisant appel aux deux premières fonctions.
+InversionDC1Dres.m: fonction contenant la boucle d'optimisation du modèle, faisant appel aux deux premières fonctions.
 Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de départ, rentre les données et lançons l'inversion.
 ```
 ## Développement du problème inverse
