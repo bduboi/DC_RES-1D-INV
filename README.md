@@ -17,7 +17,6 @@ Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de dépa
 L'équation qui décrit l'opération directe est: 
 ```math
 \begin{equation}
-\label{equation_directe}
 \mathbf{f}(\mathbf{m}) = \mathbf{d}
 \end{equation}                    
 ```
@@ -31,13 +30,36 @@ Tout le but du problème inverse est de minimiser la différence entre les donn�
 Avant de directement développer l'expression de cette norme, il faut **linéariser** notre opérateur $f$. Cela vient de la nature de notre problème: l'opérateur est non linéaire car, lorsqu'on modifie légèrement notre paramètre, disons, la conductivité à un certain endroit, cela influence les données de manière non-linéaire, à plusieurs endroits en même temps, par exemple. Cela se traduit mathématiquement par la matrice Jacobienne: 
 ```math
  \mathbf{f}(\mathbf{m}) = \mathbf{f}(\mathbf{m_0}) + \left.\dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}\right|_{m_0}\hspace{-3mm}\Delta\mathbf{m},
-Où la Jacobienne est le second terme : la variation des données modélisée ($\mathbf{f}(\mathbf{m})) par rapport à la variation du modèle $\mathbf{m}$
+```
+Où la Jacobienne est le second terme : la variation des données modélisée ($\mathbf{f}(\mathbf{m})$) par rapport à la variation du modèle $\mathbf{m}$
 ```math
 J = \dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}.
 ```
 Cette matrice, de dimension N$\times$M est appelée matrice de sensibilité, et représente, pour chaque paramètre (j = 1,...,m) l'impact sur chaque élémenent du jeu de donnée (i= 1,..., n). Par exemple, l'élement i=1, j=1 de la matrice de sensibilité donne l'influence de la resistivité de la première couche sur la resistivité apparente. 
 ### Régularisation
-\ref{equation_directe}
+Il nous faut ajouter une deuxième équation au problème. La norme de notre première équation correspond à ce qu'on appelle la norme des données:
 ```math
-
+\phi_d = \left(\mathbf{d} - \mathbf{f}(\mathbf{m})\right)^\intercal\\\left(\mathbf{d} - \mathbf{f}(\mathbf{m})\right) = \left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)^\intercal\\\left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)
 ```
+Minimiser cette norme nous permet de rapprocher nos données modélisée de nos données mesurées. Il faut ajouter une équation pour contrôler la norme du modèle, c'est la régularisation. Il existe plusieurs manière ce contrôler la norme du modèle, nous utilisons la plus simple:
+```math
+\lVert \alpha\hspace{2mm}\mathbf{I}\hspace{2mm}\mathbf{m} = \mathbf{0} \rVert 
+```
+Nous introduisons un **paramètre de régularisation ** $\alpha$. Le but à présent est de minimiser la norme à la fois des données, et du modèle, c'est le principe de discordance. Notre fonction objectif peut se réécrire 
+```math
+\phi =\phi_d + \alpha^2 \phi_m = \left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)^\intercal\\\left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right) + \alpha^2\mathbf{I}
+```
+UAvant de continuer, un développement de Taylor de la fonction objectif donne:
+```math
+\phi(\mathbf{m}+\mathbf{\Delta m}) = \phi(\mathbf{m_0}) + (\nabla_{\mathbf{m_0}}\phi(\mathbf{m_0}))\Delta\mathbf{m} + \dfrac{\Delta\mathbf{m^2}}{2} + (\nabla^2_{\mathbf{m_0}}\phi(\mathbf{m_0)}) + \mathcal{O}
+```
+Si l'on prend le gradient de cette fonction, et en négligeant les termes d'ordres supérieurs à 2:
+```math
+\nabla_{\mathbf{m}}^2\phi(\mathbf{m})\Delta\mathbf{m} = -\nabla_{\mathbf{m}}\phi(\mathbf{m})
+```
+En injectant le resultat de nos calculs, on obtient l'équation qui va gouverner notre inversion:
+```math
+\left[\mathbf{J}^\intercal\\\mathbf{J} + \alpha^2\mathbf{I}\right.]\Delta\mathbf{m} =\mathbf{J}^\intercal\\\Delta \mathbf{d} 
+```
+## Algorithme d'inversion
+Maintenant qu'on a obtenu l'équation notre équation reliant 
