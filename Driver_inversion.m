@@ -1,4 +1,4 @@
-%Import dataset
+%Importer les données et calculer la resistivité apparente.
 addpath(genpath('/Users/balthazar/Desktop/Master_Géophysique/M1/Stage_geophysique/Donnees'))
 M=  readtable('VES_data.csv');
 a = table2array(M(:,1));
@@ -14,10 +14,10 @@ pa = K.*R*10^-3;
 
 std =(std.*pa ./ 100);
 
-%define a starting model 
-nl = 15;
+%Définir les paramètres de départ
+nl = 15; % nombre de resistivité
 rho = 50*ones(nl,1)';
-thk = logspace(0.3,1.6,nl-1);
+thk = logspace(0.3,1.6,nl-1); % nombre de couche = nombre resistivité -1 (le substratum est un demi-espace infini)
 x0 = [rho thk]';
 [x, obj_fn, lambda_history] = InversionDC1Dres(x0,nl,pa,a,std);
 cumsum_thk = cumsum(x(nl+1:end));
@@ -45,7 +45,6 @@ ylabel('Fonction objectif relative');
 %grid();
 set(axl,'YGrid', 'on', 'YMinorGrid', 'on')
 set(axl,'XGrid', 'on', 'XMinorGrid', 'on')
-
 xlim([0 length(obj_fn(obj_fn>0))]);
 yyaxis right
 semilogy(it_number, lambda_history, '.-', 'MarkerSize', 12);
