@@ -13,7 +13,7 @@ Inversion_DC1Dres.m: fonction contenant la boucle d'optimisation du modèle, fai
 Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de départ, rentre les données et lançons l'inversion.
 ```
 ## Développement du problème inverse
-L'équation principale du problème inverse s'écrit
+L'équation qui décrit l'opération directe est: 
 ```
-                    $`\mathbf{f}(\mathbf{m})`$ = $`\mathbf{d}`$
+                    $\mathbf{f}(\mathbf{m})$ = $\mathbf{d}$
 ```
