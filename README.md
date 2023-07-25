@@ -95,4 +95,4 @@ Deuxièmement, un algorithme de recherche linéaire a été ajouté dans le cas 
 ```
 ## Conseils d'utilisation
 
-Le dossier à télécharger contient les 4 fichiers présentés plus haut. Il suffit de rentrer les données sur Matlab et de choisir un modèle de départ. Dans le fichier fournit, le modèle de départ est un modèle de resistivité homogène. Pour l'épaisseur, il est conseillé d'utiliser des épaisseurs croissantes en logspace pour que la sensibilité puisse accomoder les paramètres.
+Le dossier à télécharger contient les 4 fichiers présentés plus haut. Il suffit de rentrer les données sur Matlab et de choisir un modèle de départ. Dans le fichier fourni, le modèle de départ est un modèle de resistivité homogène. Pour l'épaisseur des couches, il est conseillé d'utiliser des épaisseurs croissantes en logspace pour que la sensibilité puisse accomoder les paramètres, surtout dans les premier mètres.
