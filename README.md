@@ -15,5 +15,5 @@ Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de dépa
 ## Développement du problème inverse
 L'équation principale du problème inverse s'écrit
 ```
-                    $\mathbf{f}(\mathbf{m})$ = $\mathbf{d}
+                    $`\mathbf{f}(\mathbf{m})`$ = $`\mathbf{d}`$
 ```
