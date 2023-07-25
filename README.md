@@ -12,3 +12,8 @@ Sens_log.m         : fonction matlab utilisée à chaque itération pour calcule
 Inversion_DC1Dres.m: fonction contenant la boucle d'optimisation du modèle, faisant appel aux deux premières fonctions.
 Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de départ, rentre les données et lançons l'inversion.
 ```
+## Développement du problème inverse
+L'équation principale du problème inverse s'écrit
+```
+                    $\mathbf{f}(\mathbf{m})$ = $\mathbf{d}
+```
