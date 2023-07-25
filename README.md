@@ -7,9 +7,11 @@ La procédure d'inversion utilise ce modèle pour calculer une liste de resistiv
 Il est aussi possible de prendre en compte les erreurs associées aux données en les multipliant par l'inverse de leur erreur associée, ce qui leur donne un poids : les points ayant les plus grosses erreurs seront moins impactants que les autres.
 
 <p align="center" width="100%">
-    <img width="50%" src="Exemple_inversion.jpg">
+    <img width="45%" src="Exemple_inversion.jpg">
+    <img width="45%" src="exemple_modele.jpg">
 </p>
-Ci dessus, un exemple de fit de données de resitivité apparente
+
+À gauche, en ligne continue verte figure les données modélisée par le modèle, représenté sur la figure à droite. Les données semblent convenir dans la limite des erreurs. Sur la figure à droite, la ligne orange représente le modèle de départ, qui a été choisir homogène. Cela montre que l'inversion est capable de construire un modèle qui reproduit les données à partir d'un modèle de départ relativement éloigné.
 
 ## Liste des fichiers et explication
 ```
