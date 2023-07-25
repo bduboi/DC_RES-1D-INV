@@ -1,5 +1,5 @@
 # DC_RES-1D-INV
-Ce dépos a été créé pour les étudiants du stage de terrain en géophysique. Il apporte un code et des explications pour l'inversion de mesures de resistivité 1D avec la configuration Schlumberger.
+Ce dépos a été créé pour le stage de terrain en géophysique. Il apporte un code et des explications pour l'inversion de mesures de resistivité 1D avec la configuration Schlumberger.
 ## Problème inverse
 Le principe du problème inverse est de simuler les données obtenues à partir d'un **modèle**, à l'aide d'un **opérateur direct**. Cet opérateur peut être une solution analytique aux équations physiques qui régissent l'expérience, ou une résolution numérique de l'équation. L'opérateur en question simule une grandeur physique (potentiel / tension , champs...) en fonction des **paramètres** de notre domaine, à savoir le sous sol. Ces **paramètres** sont dans notre cas la resistivité / conductivité et l'épaisseur des couches, mais on pourrait très bien faire une autre expérience pour déterminer d'autres paramètres physique.
 Dans le cas de la resistivité 1D, le modèle que nous utilisons est une solution analytique pour un modèle de Terre constituée de couches horizontales au dessus d'un **demi espace infini**. L'opérateur a été codé par Mathias Scheunert (TUBAF). Il prend en entrée M resistivités et M-1 épaisseurs (puisque la dernière couche est infinie), et la liste des N espacements d'électrodes. Avec ces trois informations, il donne en sortie une liste de N resistivités apparentes.
@@ -41,17 +41,17 @@ Avant de directement développer l'expression de cette norme, il faut **linéari
 ```math
  \mathbf{f}(\mathbf{m}) = \mathbf{f}(\mathbf{m_0}) + \left.\dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}\right|_{m_0}\hspace{-3mm}\Delta\mathbf{m},
 ```
-Où la Jacobienne est le second terme : la variation des données modélisée ($\mathbf{f}(\mathbf{m})$) par rapport à la variation du modèle $\mathbf{m}$
+Où la Jacobienne est le second terme : la variation des données modélisée $\mathbf{f}$($\mathbf{m}$), par rapport à la variation du modèle $\mathbf{m}$
 ```math
 J = \dfrac{\partial \mathbf{f}(\mathbf{m})}{\partial \mathbf{m}}.
 ```
-Cette matrice, de dimension N$\times$M est appelée matrice de sensibilité, et représente, pour chaque paramètre (j = 1,...,m) l'impact sur chaque élémenent du jeu de donnée (i= 1,..., n). Par exemple, l'élement i=1, j=1 de la matrice de sensibilité donne l'influence de la resistivité de la première couche sur la resistivité apparente. 
+Cette matrice, de dimension N $\times$ M, est appelée matrice de sensibilité, et représente, pour chaque paramètre (j = 1,...,m) l'impact de celui-ci sur chaque élémenent du jeu de donnée (i= 1,..., n). Par exemple, l'élement i=1, j=1 de la matrice de sensibilité rend compte de l'influence de la resistivité de la première couche sur la resistivité apparente. 
 ### Régularisation
 Il nous faut ajouter une deuxième équation au problème. La norme de notre première équation correspond à ce qu'on appelle la norme des données:
 ```math
 \phi_d = \left(\mathbf{d} - \mathbf{f}(\mathbf{m})\right)^\intercal\\\left(\mathbf{d} - \mathbf{f}(\mathbf{m})\right) = \left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)^\intercal\\\left(\Delta\mathbf{d} - \mathbf{J}\Delta \mathbf{m}\right)
 ```
-Minimiser cette norme nous permet de rapprocher nos données modélisée de nos données mesurées. Il faut ajouter une équation pour contrôler la norme du modèle, c'est la régularisation. Il existe plusieurs manière ce contrôler la norme du modèle, nous utilisons la plus simple:
+Minimiser cette norme nous permet de rapprocher nos données modélisée de nos données mesurées. Il faut ajouter une équation pour contrôler la norme du modèle, sinon, le modèle peut devenir ridiculement grand, et toujours fitter les données. C'est la régularisation. Il existe plusieurs manière ce contrôler la norme du modèle, nous utilisons la plus simple:
 ```math
 \lVert \alpha\hspace{2mm}\mathbf{I}\hspace{2mm}\mathbf{m} = \mathbf{0} \rVert 
 ```
@@ -73,28 +73,28 @@ En injectant le resultat de nos calculs, on obtient l'équation qui va gouverner
 ```
 ## Algorithme d'inversion
 Cette dernière équation nous permet de calculer $\Delta\mathbf{m}$ en se basant sur la sensibilité $\mathbf{J}$ et ainsi d'améliorer notre modèle. Un algorithme simple prend la forme:
-```
-choisir un modèle de départ m0
-m = m0
-tant que fonction objectif < seuil (par exemple)
-   calculer f(m) =d
-   comparer d et d_mesuree
-   calculer J
-   calculer $\Delta x$
-   m = m + $\Delta x$
-   calculer f(m) =d
-   comparer d et d_mesuree
-fin
-```
-La boucle continue tant qu'une condition de fin de boucle que l'on aura choisie n'est pas satisfaite. Ainsi, à chaque itération, on trouve une direction $\Delta x$ vers laquelle notre modèle est amélioré.
+
+- choisir un modèle de départ m0
+- m = m_0
+- tant que fonction objectif < seuil (par exemple)
+    - calculer f(m) =d
+    - comparer d et d_mesuree
+    - calculer J
+    - calculer $\Delta m$
+    - m = m + $\Delta m$
+    - calculer f(m) =d
+    - comparer d et d_mesuree
+- fin
+
+La boucle continue tant qu'une condition de fin de boucle que l'on aura choisie n'est pas satisfaite. Ainsi, à chaque itération, on trouve une direction $\Delta m$ vers laquelle notre modèle est amélioré.
 
 ## Transformation et recherche linéaire
 
 Il y a deux choses à ajouter :
-```
-Premièrement, notre paramètre est transformé en logarithme pour éviter d'avoir des resistivités négatives. Lorsque la sensibilité est calculée, et losque m est mis à jour on utilise la transformation log, et dès qu'on veut calculer les données à partir de l'opérateur on prend l'exponentiel du log.
-Deuxièmement, un algorithme de recherche linéaire a été ajouté dans le cas ou le modèle irait dans la mauvaise direction. Le principe est de rajouter un coefficient à $\Delta x$ pour s'assurer qu'il décroisse de la bonne quantité et dans la bonne direction.
-```
+
+- Premièrement, notre paramètre est transformé en logarithme pour éviter d'avoir des resistivités négatives. Lorsque la sensibilité est calculée, et losque m est mis à jour on utilise la transformation log, et dès qu'on veut calculer les données à partir de l'opérateur on prend l'exponentiel du log.
+- Deuxièmement, un algorithme de recherche linéaire a été ajouté dans le cas ou le modèle irait dans la mauvaise direction. Le principe est de rajouter un coefficient à $\Delta x$ pour s'assurer qu'il décroisse de la bonne quantité et dans la bonne direction.
+
 ## Conseils d'utilisation
 
 Le dossier à télécharger contient les 4 fichiers présentés plus haut. Il suffit de rentrer les données sur Matlab et de choisir un modèle de départ. Dans le fichier fourni, le modèle de départ est un modèle de resistivité homogène. Pour l'épaisseur des couches, il est conseillé d'utiliser des épaisseurs croissantes en logspace pour que la sensibilité puisse accomoder les paramètres, surtout dans les premier mètres. De toute manière l'épaisseur des couches sera aussi mise à jour dans l'inversion.
