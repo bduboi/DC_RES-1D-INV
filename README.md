@@ -11,15 +11,17 @@ Il est aussi possible de prendre en compte les erreurs associées aux données e
     <img width="45%" src="exemple_modele.jpg">
 </p>
 
-À gauche, en ligne continue verte figure les données modélisée par le modèle, représenté sur la figure à droite. Les données semblent convenir dans la limite des erreurs. Sur la figure à droite, la ligne orange représente le modèle de départ, qui a été choisir homogène. Cela montre que l'inversion est capable de construire un modèle qui reproduit les données à partir d'un modèle de départ relativement éloigné.
+À gauche, en ligne continue verte figure les données modélisée par le modèle, représenté sur la figure à droite. Les données semblent convenir dans la limite des erreurs. Sur la figure à droite, la ligne orange représente le modèle de départ, qui a été choisi comme homogène. Cela montre que l'inversion est capable de construire un modèle qui reproduit les données à partir d'un modèle de départ relativement éloigné.
 
 ## Liste des fichiers et explication
 ```
-dcfwdf.m           : fonction matlab calculant la réponse à un modèle de resistivité / épaisseurs 1D
-Sens_log.m         : fonction matlab utilisée à chaque itération pour calculer la **sensibilité** (ou Jacobienne) et trouver une direction de modification du modèle
+dcfwdf.m           : fonction calculant la réponse à un modèle de resistivité / épaisseurs 1D
+Sens_log.m         : fonction utilisée à chaque itération pour calculer la **sensibilité** (ou Jacobienne) et trouver une direction de modification du modèle
 InversionDC1Dres.m: fonction contenant la boucle d'optimisation du modèle, faisant appel aux deux premières fonctions.
 Driver_inversion.m : Code matlab à partir duquel on choisit un modèle de départ, rentre les données et lançons l'inversion.
 ```
+Il est nécessaire d'installer Matlab, qui est disponible gratuitement avec l'adresse mail ipgp : https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&s_tid=gn_getml
+
 ## Développement du problème inverse
 ### Linéaration
 L'équation qui décrit l'opération directe est: 
